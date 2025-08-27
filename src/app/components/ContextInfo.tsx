@@ -1,17 +1,22 @@
 import { render, type StoryblokRichtext } from "storyblok-rich-text-react-renderer";
 import Image from "next/image";
 import ExpandButton from "./ExpandButton";
+import { ContextBlok } from "../types/storyblok";
+
+// interface ContextInfoProps {
+//   blok: {
+//     contextInfo?: StoryblokRichtext;
+//     contextImages?: Array<{
+//       filename: string;
+//       alt: string;
+//       id: number;
+//       title?: string;
+//     }>;
+//   };
+// }
 
 interface ContextInfoProps {
-  blok: {
-    contextInfo?: StoryblokRichtext;
-    contextImages?: Array<{
-      filename: string;
-      alt: string;
-      id: number;
-      title?: string;
-    }>;
-  };
+  blok: ContextBlok;
 }
 
 export default function ContextInfo({ blok }: ContextInfoProps) {

@@ -3,9 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import formatDate from "@/utils/formatDate";
 import { getStoryblokApi } from "@/utils/storyblok";
-import { render } from "storyblok-rich-text-react-renderer";
+import { render, StoryblokRichtext } from "storyblok-rich-text-react-renderer";
 import ContextInfo from "@/app/components/ContextInfo";
 import ExpandButton from "@/app/components/ExpandButton";
+import { ContextBlok } from "@/app/types/storyblok";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,9 @@ async function getAutographById(idFromUrl: string) {
   });
   return data.stories?.[0] ?? null;
 }
+
+
+
 
 export default async function AutographPage({
   params,
@@ -33,8 +37,6 @@ export default async function AutographPage({
   if (!story) notFound();
 
   const aut = story.content;
-
-  // console.log("aut: ", aut)
 
   // reconstruir query string de manera segura
   const query = new URLSearchParams(
@@ -98,7 +100,7 @@ export default async function AutographPage({
       </div>
         {aut.context && aut.context.length > 0 && (
           <div className="mt-12 space-y-10">
-            {aut.context.map((blok: any) => (
+            {aut.context.map((blok: ContextBlok) => (
               <ContextInfo 
                 blok={blok} 
                 key={blok._uid} 

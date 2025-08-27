@@ -6,7 +6,7 @@ type DisplayBarSearchFormProps = {
 
 export default function DisplayBarSearchForm({setSearchedName}:DisplayBarSearchFormProps) {
   
-  function handleInputSearch(event:any) {
+  function handleInputSearch(event:string) {
     setSearchedName(event)
   }
   

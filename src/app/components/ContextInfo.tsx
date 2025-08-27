@@ -1,11 +1,10 @@
-import { render } from "storyblok-rich-text-react-renderer";
+import { render, type StoryblokRichtext } from "storyblok-rich-text-react-renderer";
 import Image from "next/image";
 import ExpandButton from "./ExpandButton";
 
-
 interface ContextInfoProps {
   blok: {
-    contextInfo?: any;
+    contextInfo?: StoryblokRichtext;
     contextImages?: Array<{
       filename: string;
       alt: string;
@@ -16,11 +15,9 @@ interface ContextInfoProps {
 }
 
 export default function ContextInfo({ blok }: ContextInfoProps) {
-
   return (
     <section className="grid grid-cols-[3.5fr_2.5fr]">
       {/* Rich Text */}
-
       {blok.contextInfo && (
         <div className="prose prose-sm text-gray-800">
           {render(blok.contextInfo)}
@@ -41,11 +38,11 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
                   className="object-cover w-7/10 cursor-pointer"
                   style={{ objectFit: "contain" }}
                 />
-                <ExpandButton 
-                  imageUrl = {img.filename}
-                  alt = {img.alt || ""}
-                  xAxis = "left-2"
-                  imagesArr = {blok.contextImages}
+                <ExpandButton
+                  imageUrl={img.filename}
+                  alt={img.alt || ""}
+                  xAxis="left-2"
+                  imagesArr={blok.contextImages}
                 />
               </div>
               {img.title && (
@@ -55,7 +52,6 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
               )}
             </figure>
           ))}
-
         </div>
       )}
     </section>

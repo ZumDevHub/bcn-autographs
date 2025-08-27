@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import formatDate from "@/utils/formatDate";
 import { getStoryblokApi } from "@/utils/storyblok";
 import { render } from "storyblok-rich-text-react-renderer";
-import { StoryblokComponent } from "@storyblok/react";
 import ContextInfo from "@/app/components/ContextInfo";
 import ExpandButton from "@/app/components/ExpandButton";
 
@@ -35,7 +34,7 @@ export default async function AutographPage({
 
   const aut = story.content;
 
-  console.log("aut: ", aut)
+  // console.log("aut: ", aut)
 
   // reconstruir query string de manera segura
   const query = new URLSearchParams(
@@ -100,10 +99,6 @@ export default async function AutographPage({
         {aut.context && aut.context.length > 0 && (
           <div className="mt-12 space-y-10">
             {aut.context.map((blok: any) => (
-              // <StoryblokComponent 
-              //   blok={blok} 
-              //   key={blok._uid} 
-              // />
               <ContextInfo 
                 blok={blok} 
                 key={blok._uid} 

@@ -25,7 +25,6 @@ export default function DisplayBar({sortBy, setSortBy, setDisplay, display, sort
         
         <div className="flex items-end justify-center h-full bg-gray-300">
           <ListGridButtons 
-            display = {display}
             setDisplay = {setDisplay}
           />
         </div>

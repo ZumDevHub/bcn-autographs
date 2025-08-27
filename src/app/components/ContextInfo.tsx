@@ -1,4 +1,4 @@
-import { render, type StoryblokRichtext } from "storyblok-rich-text-react-renderer";
+import { render } from "storyblok-rich-text-react-renderer";
 import Image from "next/image";
 import ExpandButton from "./ExpandButton";
 import { ContextBlok } from "../types/storyblok";

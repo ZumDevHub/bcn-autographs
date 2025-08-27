@@ -3,7 +3,6 @@
 import Image from "next/image"
 import { useState } from "react"
 
-// Tipo para cada imagen del carrousel
 type ContextImage = {
   filename: string;
   alt: string;
@@ -11,11 +10,10 @@ type ContextImage = {
   title?: string;
 }
 
-// Props del componente
 type ContextImageCarrouselProps = {
   imageUrl: string;
   alt: string;
-  imagesArr: ContextImage[]; // nunca undefined
+  imagesArr: ContextImage[];
 }
 
 export default function ContextImagesCarrousel({
@@ -23,17 +21,14 @@ export default function ContextImagesCarrousel({
   alt,
   imagesArr,
 }: ContextImageCarrouselProps) {
-  console.log("ContextImagesCarrousel");
-  console.log("imagesArr: ", imagesArr);
 
-  // Si no hay imágenes, retornamos null
-  if (imagesArr.length === 0) return null;
-
-  // Inicializamos el índice
+  // Inicializamos el índice primero, antes de cualquier return
   const initialIndex = imagesArr.findIndex(img => img.filename === imageUrl) ?? 0;
   const [index, setIndex] = useState(initialIndex);
 
-  // Función para avanzar el carrousel
+  // Si no hay imágenes, retornamos null dentro del render
+  if (imagesArr.length === 0) return null;
+
   function handleCarrousel() {
     setIndex(prevIndex => (prevIndex + 1) % imagesArr.length);
   }

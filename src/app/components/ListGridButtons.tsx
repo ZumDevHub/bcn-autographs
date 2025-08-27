@@ -2,11 +2,10 @@ import { Dispatch, SetStateAction } from "react"
 
 
 type ListGridButtonsProps = {
-  display: string;
   setDisplay: Dispatch<SetStateAction<string>>;
 }
 
-export default function ListGridButtons({display, setDisplay}:ListGridButtonsProps) {
+export default function ListGridButtons({setDisplay}:ListGridButtonsProps) {
   return(
     <>
       <div className="h-1/2 bg-white text-sm text-gray-500 leading-none border-1 border-gray-200 rounded-full inline-flex text-sm">

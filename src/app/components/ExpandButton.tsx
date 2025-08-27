@@ -2,7 +2,7 @@
 
 import { ExpandIcon } from "./ExpandIcon"
 import Image from "next/image";
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ContextImagesCarrousel from "./ContextImagesCarrousel";
 
 type ExpandButtonProps= {
@@ -57,7 +57,6 @@ export default function ExpandButton({imageUrl, alt, xAxis, imagesArr}:ExpandBut
             
         </div>
       )}
-
     </>
   )
 }

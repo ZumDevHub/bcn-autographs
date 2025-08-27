@@ -10,7 +10,8 @@ import Categories from "./Categories";
 import Years from "./Years";
 import valueAproxDate from "@/utils/valueAproxDate";
 
-type Autograph = {
+// Tipo final usado en la UI
+export interface Autograph {
   Id: string;
   signerName: string;
   nationality: string;
@@ -23,9 +24,19 @@ type Autograph = {
   collectionName: string;
   photo?: { filename: string };
   storyName: string;
-};
+}
 
-export default function HomeClient({ data }: any) {
+// Tipo crudo que viene de Storyblok
+interface StoryblokStory {
+  name: string;
+  content: Omit<Autograph, "storyName">;
+}
+
+interface HomeClientProps {
+  data: StoryblokStory[];
+}
+
+export default function HomeClient({ data }: HomeClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -36,10 +47,10 @@ export default function HomeClient({ data }: any) {
   const [checkedCategories, setCheckedCategories] = useState<string[]>(searchParams.get("categories")?.split(",") || []);
   const [checkedYears, setCheckedYears] = useState<number[]>(searchParams.get("years")?.split(",").map(Number) || []);
   const [display, setDisplay] = useState(searchParams.get("display") || "list");
-  const [searchedName,setSearchedName] = useState(searchParams.get("searched") || "");
+  const [searchedName, setSearchedName] = useState(searchParams.get("searched") || "");
 
   const [autographsList, setAutographsList] = useState<Autograph[]>([]);
-  const [recordsDisplayed, setRecordsDisplayed] = useState<number>(autographsList.length);
+  const [recordsDisplayed, setRecordsDisplayed] = useState<number>(0);
   const [years, setYears] = useState<number[]>([]);
 
   const categories = ["music", "literature", "theatre", "painting", "science", "chess", "politics", "unusual"];
@@ -49,12 +60,13 @@ export default function HomeClient({ data }: any) {
   // Normalizamos datos de Storyblok
   useEffect(() => {
     if (!data) return;
-    const normalized: Autograph[] = data.map((item: any) => ({
+    const normalized: Autograph[] = data.map((item) => ({
       ...item.content,
       exactDate: item.content.exactDate ?? "",
       storyName: item.name,
     }));
     setAutographsList(normalized);
+    setRecordsDisplayed(normalized.length);
   }, [data]);
 
   // Extraemos años únicos
@@ -68,6 +80,7 @@ export default function HomeClient({ data }: any) {
       .filter((num): num is number => num !== null)
       .filter((num, i, arr) => arr.indexOf(num) === i)
       .sort((a, b) => a - b);
+
     setYears(yearsEntry);
   }, [autographsList]);
 
@@ -93,25 +106,50 @@ export default function HomeClient({ data }: any) {
   }, [checkedCategories, checkedYears, sortBy, display, pathname, router, searchParams]);
 
   // Ordenar y filtrar
-  const sortedList = useMemo(() => {
+  const sortedList = useMemo<Autograph[]>(() => {
     let list = [...autographsList];
-    if (checkedCategories.length > 0) list = list.filter((aut) => checkedCategories.includes(aut.category));
+
+    if (checkedCategories.length > 0) {
+      list = list.filter((aut) => checkedCategories.includes(aut.category));
+    }
+
     if (checkedYears.length > 0) {
       list = list.filter((aut) => {
-        const year = aut.exactDate ? Number(extreuAny(aut.exactDate, "exactDate")) : Number(extreuAny(aut.aproxDate, "aproxDate"));
+        const year = aut.exactDate
+          ? Number(extreuAny(aut.exactDate, "exactDate"))
+          : aut.aproxDate
+          ? Number(extreuAny(aut.aproxDate, "aproxDate"))
+          : null;
         return year !== null && checkedYears.includes(year);
       });
     }
+
     switch (sortBy) {
-      case "Name Asc": list.sort((a, b) => (a.signerName ?? "").localeCompare(b.signerName ?? "")); break;
-      case "Name Desc": list.sort((a, b) => (b.signerName ?? "").localeCompare(a.signerName ?? "")); break;
-      case "Date Asc": list.sort((a, b) => (a.exactDate ? new Date(a.exactDate).getTime() : valueAproxDate(a.aproxDate) ?? 0) - (b.exactDate ? new Date(b.exactDate).getTime() : valueAproxDate(b.aproxDate) ?? 0)); break;
-      case "Date Desc": list.sort((a, b) => (b.exactDate ? new Date(b.exactDate).getTime() : valueAproxDate(b.aproxDate) ?? 0) - (a.exactDate ? new Date(a.exactDate).getTime() : valueAproxDate(a.aproxDate) ?? 0)); break;
+      case "Name Asc":
+        list.sort((a, b) => (a.signerName ?? "").localeCompare(b.signerName ?? ""));
+        break;
+      case "Name Desc":
+        list.sort((a, b) => (b.signerName ?? "").localeCompare(a.signerName ?? ""));
+        break;
+      case "Date Asc":
+        list.sort(
+          (a, b) =>
+            (a.exactDate ? new Date(a.exactDate).getTime() : valueAproxDate(a.aproxDate) ?? 0) -
+            (b.exactDate ? new Date(b.exactDate).getTime() : valueAproxDate(b.aproxDate) ?? 0)
+        );
+        break;
+      case "Date Desc":
+        list.sort(
+          (a, b) =>
+            (b.exactDate ? new Date(b.exactDate).getTime() : valueAproxDate(b.aproxDate) ?? 0) -
+            (a.exactDate ? new Date(a.exactDate).getTime() : valueAproxDate(a.aproxDate) ?? 0)
+        );
+        break;
     }
 
     if (searchedName.length >= 3) {
-      const regex = new RegExp(searchedName, "i"); // "i" = case insensitive
-      list = list.filter((name) => regex.test(name.signerName));
+      const regex = new RegExp(searchedName, "i");
+      list = list.filter((aut) => regex.test(aut.signerName));
     }
 
     setRecordsDisplayed(list.length);
@@ -120,37 +158,33 @@ export default function HomeClient({ data }: any) {
   }, [checkedCategories, checkedYears, autographsList, sortBy, searchedName]);
 
   function toggleCategory(cat: string) {
-    setCheckedCategories(checkedCategories.includes(cat) ? checkedCategories.filter(c => c !== cat) : [...checkedCategories, cat]);
+    setCheckedCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
   }
 
   function toggleYear(year: number) {
-    setCheckedYears(checkedYears.includes(year) ? checkedYears.filter(y => y !== year) : [...checkedYears, year]);
+    setCheckedYears((prev) => (prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]));
   }
 
   return (
     <div className="grid grid-cols-[1.5fr_4.5fr]">
       <div className="flex flex-col bg-gray-200 pt-5 p-2">
         <div className="fixed w-1/3">
-         <DisplayBarSearchForm 
-          setSearchedName = {setSearchedName}
-        />
+          <DisplayBarSearchForm setSearchedName={setSearchedName} />
           <Categories categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
           <Years years={years} toggleYear={toggleYear} checkedYears={checkedYears} />
         </div>
       </div>
       <div className="flex flex-col">
-        <DisplayBar 
-          sortBy={sortBy} 
-          setSortBy={setSortBy} 
-          sortAlternatives={sortAlternatives} 
-          setDisplay={setDisplay} 
-          display={display} 
+        <DisplayBar
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          sortAlternatives={sortAlternatives}
+          setDisplay={setDisplay}
+          display={display}
         />
-        <AutographsList 
-          autographsList={sortedList} 
-          display={display} 
-          recordsDisplayed={recordsDisplayed} 
-        />
+        <AutographsList autographsList={sortedList} display={display} recordsDisplayed={recordsDisplayed} />
       </div>
     </div>
   );

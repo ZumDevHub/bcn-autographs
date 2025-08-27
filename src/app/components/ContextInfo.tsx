@@ -3,18 +3,6 @@ import Image from "next/image";
 import ExpandButton from "./ExpandButton";
 import { ContextBlok } from "../types/storyblok";
 
-// interface ContextInfoProps {
-//   blok: {
-//     contextInfo?: StoryblokRichtext;
-//     contextImages?: Array<{
-//       filename: string;
-//       alt: string;
-//       id: number;
-//       title?: string;
-//     }>;
-//   };
-// }
-
 interface ContextInfoProps {
   blok: ContextBlok;
 }

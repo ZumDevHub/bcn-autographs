@@ -1,41 +1,50 @@
 'use client'
 
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
+// Tipo para cada imagen del carrousel
+type ContextImage = {
+  filename: string;
+  alt: string;
+  id: number;
+  title?: string;
+}
+
+// Props del componente
 type ContextImageCarrouselProps = {
   imageUrl: string;
   alt: string;
-  imagesArr:  {filename: string; alt: string; id: number; title?: string | undefined; }[] | undefined;
+  imagesArr: ContextImage[]; // nunca undefined
 }
 
-export default function ContextImagesCarrousel({imageUrl, alt, imagesArr}:ContextImageCarrouselProps){
+export default function ContextImagesCarrousel({
+  imageUrl,
+  alt,
+  imagesArr,
+}: ContextImageCarrouselProps) {
   console.log("ContextImagesCarrousel");
   console.log("imagesArr: ", imagesArr);
-  
-  if (!imagesArr || imagesArr.length === 0) return null;
-  
-  const [index, setIndex] = useState(imagesArr?.findIndex((img) => img.filename == imageUrl))
 
+  // Si no hay imágenes, retornamos null
+  if (imagesArr.length === 0) return null;
+
+  // Inicializamos el índice
+  const initialIndex = imagesArr.findIndex(img => img.filename === imageUrl) ?? 0;
+  const [index, setIndex] = useState(initialIndex);
+
+  // Función para avanzar el carrousel
   function handleCarrousel() {
-    index + 1 !== imagesArr?.length 
-    ? setIndex(index + 1) 
-    : setIndex(0);
+    setIndex(prevIndex => (prevIndex + 1) % imagesArr.length);
   }
-  console.log("index: ", index);
-  console.log("imagesArr[0].filename: ", imagesArr[0].filename);
+
   return (
-    
-    <div 
-      className="relative w-full h-full flex items-center justify-center p-4 z-30 cursor-pointer" 
-      onClick={() => handleCarrousel()}
+    <div
+      className="relative w-full h-full flex items-center justify-center p-4 z-30 cursor-pointer"
+      onClick={handleCarrousel}
     >
-      
       <Image
-        src={imagesArr[index].filename === undefined 
-          ? imageUrl 
-          : imagesArr[index].filename
-        }
+        src={imagesArr[index].filename ?? imageUrl}
         alt={alt}
         width={1200}
         height={1200}

@@ -11,7 +11,7 @@ type DisplayBarSortListProps = {
 
 export default function DisplayBarSortList({sortBy, setSortBy, sortAlternatives}:DisplayBarSortListProps) {
 
-const [sortDropMenu, setSortDropMenu] = useState<Boolean>(false)
+const [sortDropMenu, setSortDropMenu] = useState<boolean>(false)
 
 	return(
 		<div className="relative w-48">

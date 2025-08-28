@@ -1,7 +1,12 @@
 import { getStoryblokApi } from "@/utils/storyblok";
 import HomeClient from "./components/HomeClient";
 
+
+// Esto le dice a Next que revalide cuando tú se lo pidas
+export const revalidate = 60; // valor cualquiera, pero obligatorio para ISR
+
 export default async function Home() {
+  
   let stories = [];
   try {
     const storyblokApi = getStoryblokApi();
@@ -15,6 +20,7 @@ export default async function Home() {
   }
 
   return <HomeClient data={stories} />;
+}
 
 
 
@@ -40,4 +46,4 @@ export default async function Home() {
 //       <HomeClient data={stories} />
 //     </Suspense>
 //   );
-}
+

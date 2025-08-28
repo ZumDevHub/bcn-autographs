@@ -19,7 +19,7 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
 
       {/* Imágenes relacionadas */}
       {Array.isArray(blok.contextImages) && blok.contextImages.length > 0 && (
-        <div className="relative flex flex-col bg-white pl-8">
+        <div className="relative flex flex-col items-start bg-white pl-8">
           {blok.contextImages.map((img) => (
             <figure key={img.id} className="mb-8">
               <div className="relative">
@@ -28,7 +28,7 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
                   alt={img.alt || ""}
                   width={600}
                   height={400}
-                  className="object-cover w-7/10 cursor-pointer"
+                  className="object-cover w-7/10 max-h-70 cursor-pointer"
                   style={{ objectFit: "contain" }}
                 />
                 <ExpandButton

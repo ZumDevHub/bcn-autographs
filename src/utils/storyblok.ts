@@ -6,9 +6,9 @@ import StoryblokClient from "storyblok-js-client";
 // Importa tus componentes para usarlos en Storyblok
 import ContextInfo from "@/app/components/ContextInfo";
 import AutographPage from "@/app/autographs/[slug]/page";
-
+console.log("TOKEN 1", process.env.STORYBLOK_API_TOKEN)
 const accessToken = process.env.STORYBLOK_API_TOKEN;
-
+console.log("TOKEN 2", process.env.STORYBLOK_API_TOKEN)
 // 🔒 Verificación de seguridad
 if (!accessToken) {
   console.error(
@@ -16,7 +16,7 @@ if (!accessToken) {
       "Configúrala en Vercel → Project Settings → Environment Variables."
   );
 }
-
+console.log("TOKEN 3", process.env.STORYBLOK_API_TOKEN)
 // Inicialización de Storyblok React (para componentes visuales)
 storyblokInit({
   accessToken,
@@ -29,7 +29,7 @@ storyblokInit({
 
 // Cliente de Storyblok para llamadas a la API
 let storyblokApi: StoryblokClient | null = null;
-
+console.log("TOKEN 4", process.env.STORYBLOK_API_TOKEN)
 export function getStoryblokApi(): StoryblokClient {
   if (!storyblokApi) {
     if (!accessToken) {

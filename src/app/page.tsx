@@ -1,4 +1,4 @@
-
+import { Suspense } from "react";
 import { getStoryblokApi } from "@/utils/storyblok";
 import HomeClient from "./components/HomeClient";
 
@@ -13,8 +13,11 @@ export default async function Home() {
     stories = data.stories;
   } catch (error) {
     console.error("Storyblok fetch failed:", error);
-    // Opcional: mostrar página vacía o mensaje de error
   }
 
-  return <HomeClient data={stories} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeClient data={stories} />
+    </Suspense>
+  );
 }

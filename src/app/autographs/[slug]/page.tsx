@@ -20,9 +20,6 @@ async function getAutographById(idFromUrl: string) {
   return data.stories?.[0] ?? null;
 }
 
-
-
-
 export default async function AutographPage({
   params,
   searchParams,

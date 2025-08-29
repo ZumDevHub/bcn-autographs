@@ -16,12 +16,15 @@ type ContextImageCarrouselProps = {
   imagesArr: ContextImage[];
 }
 
+
 export default function ContextImagesCarrousel({ imageUrl, alt, imagesArr }: ContextImageCarrouselProps) {
-  if (!imagesArr || imagesArr.length === 0) return null;
+  
 
   const found = imagesArr.findIndex(img => img.filename === imageUrl);
   const initialIndex = found >= 0 ? found : 0;
   const [index, setIndex] = useState(initialIndex);
+
+  if (!imagesArr || imagesArr.length === 0) return null;
 
   function handleCarrousel() {
     setIndex(prev => (prev + 1) % imagesArr.length);

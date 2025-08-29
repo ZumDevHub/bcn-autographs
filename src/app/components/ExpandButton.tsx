@@ -26,7 +26,7 @@ export default function ExpandButton({imageUrl, alt, xAxis, imagesArr}:ExpandBut
         className="w-6 h-6 text-white hover:text-black"
       />
     </div>
-    {console.log("ExpandButton imageUrl: ", imageUrl)}
+
       {/* Modal a pantalla completa */}
       {open && (
         <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-30">

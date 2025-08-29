@@ -1,12 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import formatDate from "@/utils/formatDate";
 import { getStoryblokApi } from "@/utils/storyblok";
 import { render, StoryblokRichtext } from "storyblok-rich-text-react-renderer";
 import ContextInfo from "@/app/components/ContextInfo";
-import ExpandButton from "@/app/components/ExpandButton";
 import { ContextBlok } from "@/app/types/storyblok";
+import ContextMainImage from "@/app/components/ContextMainImage";
 
 export const dynamic = "force-dynamic";
 
@@ -45,7 +44,7 @@ export default async function AutographPage({
   ).toString();
 
   return (
-    <main className="w-full mx-auto bg-white p-6">
+    <main className="w-full mx-auto p-6 bg-gray-100">
       <div className="">
         <Link
           href={query ? `/?${query}` : `/`}
@@ -58,19 +57,9 @@ export default async function AutographPage({
       <div className="flex items-start gap-4 mt-6">
         {aut.photo?.filename && (
           <div className="relative">
-          <Image
-            src={aut.photo.filename}
-            width={400}
-            height={400}
-            alt={aut.signerName}
-            style={{ objectFit: "contain" }}
-          />
-          
-          <ExpandButton 
-            imageUrl = {aut.photo.filename}
+          <ContextMainImage 
+            src= {aut.photo.filename}
             alt = {aut.signerName}
-            xAxis = "right-2"
-            imagesArr= {undefined}
           />
           </div>
         )}

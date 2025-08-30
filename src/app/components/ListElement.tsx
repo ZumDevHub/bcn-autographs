@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import formatDate from "@/utils/formatDate";
+import { useParams } from "next/navigation";
+
+
+
 
 type Autograph = {
   Id: string;
@@ -28,7 +32,10 @@ type ListElementProps = {
 export default function ListElement({ story, display }: ListElementProps) {
   const searchParams = useSearchParams();
   const query = searchParams.toString();
-  const href = `/autographs/${story.Id}${query ? `?${query}` : ""}`;
+  const params = useParams(); // <- de next/navigation
+  const locale = params?.locale ?? "en-gb"; // fallback al default
+  const href = `/${locale}/autographs/${story.Id}${query ? `?${query}` : ""}`;
+
 
   return (
     <Link href={href} prefetch={false}>

@@ -5,7 +5,7 @@ import StoryblokClient from "storyblok-js-client";
 
 // Importa tus componentes para usarlos en Storyblok
 import ContextInfo from "@/app/components/ContextInfo";
-import AutographPage from "@/app/autographs/[slug]/page";
+import AutographPage from "@/app/[locale]/autographs/[slug]/page";
 
 const accessToken = process.env.STORYBLOK_API_TOKEN;
 

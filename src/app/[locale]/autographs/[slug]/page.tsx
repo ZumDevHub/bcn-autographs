@@ -54,7 +54,7 @@ export default async function AutographPage({
         </Link>
       </div>
 
-      <div className="flex items-start gap-4 mt-6">
+      <div className="flex flex-col items-start gap-4 mt-6 sm:flex-row">
         {aut.photo?.filename && (
           <div className="relative">
           <ContextMainImage 

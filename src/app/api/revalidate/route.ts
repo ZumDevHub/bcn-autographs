@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
     const slug = body.story?.full_slug;
 
     if (slug) {
-      revalidatePath(`/${slug}`);
+      // Storyblok manda slugs completos con locale si es multilenguaje
+      revalidatePath(`/${slug}`, "page");
     }
 
     // Siempre revalidamos la homepage también, por si el listado cambia

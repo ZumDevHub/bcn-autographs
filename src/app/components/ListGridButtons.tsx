@@ -8,7 +8,7 @@ type ListGridButtonsProps = {
 export default function ListGridButtons({setDisplay}:ListGridButtonsProps) {
   return(
     <>
-      <div className="h-1/2 bg-white text-sm text-gray-500 leading-none border-1 border-gray-200 rounded-full inline-flex text-sm">
+      <div className="hidden lg:inline-flex h-1/2 bg-white text-sm text-gray-500 leading-none border-1 border-gray-200 rounded-full ">
         <button 
           className="inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-2 py-2 active cursor-pointer" 
           id="grid"

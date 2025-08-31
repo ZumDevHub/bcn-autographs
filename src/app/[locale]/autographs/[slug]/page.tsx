@@ -9,12 +9,6 @@ import ContextMainImage from "@/app/components/ContextMainImage";
 
 export const dynamic = "force-dynamic";
 
-// Tipado explícito de los parámetros de la página
-type AutographPageParams = {
-  params: { slug: string; locale: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 async function getAutographById(idFromUrl: string) {
   const storyblokApi = getStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
@@ -25,11 +19,16 @@ async function getAutographById(idFromUrl: string) {
   return data.stories?.[0] ?? null;
 }
 
+type SearchParams = { [key: string]: string | string[] | undefined };
+
 export default async function AutographPage({
   params,
   searchParams,
-}: AutographPageParams) {
-  const { slug, locale } = params; // puedes usar 'locale' si implementas i18n
+}: {
+  params: { slug: string; locale: string };
+  searchParams: SearchParams;
+}) {
+  const { slug, locale } = params;
   const sp = searchParams;
 
   const story = await getAutographById(slug);
@@ -83,6 +82,7 @@ export default async function AutographPage({
           </div>
         </div>
       </div>
+
       {aut.context && aut.context.length > 0 && (
         <div className="mt-12 space-y-10">
           {aut.context.map((blok: ContextBlok) => (
@@ -93,3 +93,4 @@ export default async function AutographPage({
     </main>
   );
 }
+

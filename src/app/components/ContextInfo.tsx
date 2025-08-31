@@ -30,7 +30,7 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
   const hasImages = images.length > 0;
 
   return (
-    <section className="grid grid-cols-[3.5fr_2.5fr]">
+    <section className="sm:grid sm:grid-cols-[3.5fr_2.5fr]">
       {/* Rich Text */}
       {blok.contextInfo && (
         <div className="prose prose-sm text-gray-800 p-5 mr-5 bg-gray-200 rounded-md">

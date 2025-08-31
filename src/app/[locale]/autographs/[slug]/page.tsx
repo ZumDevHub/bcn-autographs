@@ -55,7 +55,7 @@ export default async function AutographPage({
         </Link>
       </div>
 
-      <div className="flex flex-col items-start gap-4 mt-6 sm:flex-row">
+      <div className="flex flex-col items-center gap-4 mt-6 sm:flex-row sm:items-start bg-gray-100 ">
         {aut.photo?.filename && (
           <div className="relative">
             <ContextMainImage src={aut.photo.filename} alt={aut.signerName} />
@@ -77,7 +77,7 @@ export default async function AutographPage({
                 : formatDate(aut.aproxDate, "aprox")}
             </span>
           </p>
-          <div className="prose prose-sm mt-6 max-w-2/3">
+          <div className="prose prose-sm mt-6 w-full sm:max-w-2/3">
             {render(aut.content)}
           </div>
         </div>

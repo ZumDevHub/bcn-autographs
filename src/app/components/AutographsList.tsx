@@ -24,7 +24,7 @@ type AutographsListProps = {
 export default function AutographsList({ autographsList, display, recordsDisplayed }: AutographsListProps) {
   // console.log("autographsList: ", autographsList)
   return (
-    <main className="flex flex-col bg-gray-200">
+    <main className="w-full flex flex-col bg-gray-200">
       <div className="flex text-xs pl-5 pt-5">
         Records displayed: {recordsDisplayed}
       </div>

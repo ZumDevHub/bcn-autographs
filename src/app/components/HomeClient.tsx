@@ -169,7 +169,7 @@ export default function HomeClient({ data }: HomeClientProps) {
 
   return (
     <div className="flex sm:grid sm:grid-cols-[1.5fr_4.5fr]">
-      <div className="hidden sm:flex sm:flex-col bg-gray-200 pt-5 p-2">
+      <div className="hidden bg-gray-200 pt-5 p-2 sm:flex sm:flex-col ">
         <div className="fixed w-1/3">
           <DisplayBarSearchForm setSearchedName={setSearchedName} />
           <Categories categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />

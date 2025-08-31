@@ -9,8 +9,8 @@ import ContextMainImage from "@/app/components/ContextMainImage";
 
 export const dynamic = "force-dynamic";
 
-// Tipado propio para las props de la página
-type AutographPageProps = {
+// Tipado explícito de los parámetros de la página
+type AutographPageParams = {
   params: { slug: string; locale: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
@@ -28,8 +28,8 @@ async function getAutographById(idFromUrl: string) {
 export default async function AutographPage({
   params,
   searchParams,
-}: AutographPageProps) {
-  const { slug, locale } = params; // puedes usar locale si lo necesitas
+}: AutographPageParams) {
+  const { slug, locale } = params; // puedes usar 'locale' si implementas i18n
   const sp = searchParams;
 
   const story = await getAutographById(slug);

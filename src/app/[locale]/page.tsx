@@ -14,4 +14,3 @@ export default async function Home({ params }: Props) {
 
   return <HomeClient data={stories} />;
 }
-

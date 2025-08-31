@@ -1,8 +1,9 @@
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import formatDate from "@/utils/formatDate";
 import { getStoryblokApi } from "@/utils/storyblok";
-import { render, StoryblokRichtext } from "storyblok-rich-text-react-renderer";
+import { render } from "storyblok-rich-text-react-renderer";
 import ContextInfo from "@/app/components/ContextInfo";
 import { ContextBlok } from "@/app/types/storyblok";
 import ContextMainImage from "@/app/components/ContextMainImage";
@@ -23,18 +24,17 @@ export default async function AutographPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ slug: string }>; 
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: { slug: string }; // ✅ objeto normal
+  searchParams: { [key: string]: string | string[] | undefined }; // ✅ objeto normal
 }) {
-  const { slug } = await params;
-  const sp = await searchParams;
+  const { slug } = params; // ✅ sin await
+  const sp = searchParams; // ✅ sin await
 
   const story = await getAutographById(slug);
   if (!story) notFound();
 
   const aut = story.content;
 
-  // reconstruir query string de manera segura
   const query = new URLSearchParams(
     Object.entries(sp).reduce((acc, [key, value]) => {
       if (typeof value === "string") acc[key] = value;
@@ -45,7 +45,7 @@ export default async function AutographPage({
 
   return (
     <main className="w-full mx-auto p-6 bg-gray-100">
-      <div className="">
+      <div>
         <Link
           href={query ? `/?${query}` : `/`}
           className="inline-block px-4 py-2 rounded-md mb-2 text-sm hover:bg-gray-200"
@@ -57,10 +57,7 @@ export default async function AutographPage({
       <div className="flex flex-col items-start gap-4 mt-6 sm:flex-row">
         {aut.photo?.filename && (
           <div className="relative">
-          <ContextMainImage 
-            src= {aut.photo.filename}
-            alt = {aut.signerName}
-          />
+            <ContextMainImage src={aut.photo.filename} alt={aut.signerName} />
           </div>
         )}
         <div className="flex flex-col text-gray-800">
@@ -84,16 +81,13 @@ export default async function AutographPage({
           </div>
         </div>
       </div>
-        {aut.context && aut.context.length > 0 && (
-          <div className="mt-12 space-y-10">
-            {aut.context.map((blok: ContextBlok) => (
-              <ContextInfo 
-                blok={blok} 
-                key={blok._uid} 
-              />
-            ))}
-          </div>
-        )}
+      {aut.context && aut.context.length > 0 && (
+        <div className="mt-12 space-y-10">
+          {aut.context.map((blok: ContextBlok) => (
+            <ContextInfo blok={blok} key={blok._uid} />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

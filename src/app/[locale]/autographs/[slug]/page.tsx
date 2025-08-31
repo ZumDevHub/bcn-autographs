@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import formatDate from "@/utils/formatDate";
@@ -9,6 +8,12 @@ import { ContextBlok } from "@/app/types/storyblok";
 import ContextMainImage from "@/app/components/ContextMainImage";
 
 export const dynamic = "force-dynamic";
+
+// Tipado propio para las props de la página
+type AutographPageProps = {
+  params: { slug: string; locale: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
 async function getAutographById(idFromUrl: string) {
   const storyblokApi = getStoryblokApi();
@@ -23,11 +28,8 @@ async function getAutographById(idFromUrl: string) {
 export default async function AutographPage({
   params,
   searchParams,
-}: {
-  params: { locale: string; slug: string }; // <-- agregar locale
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
-  const { slug, locale } = params;
+}: AutographPageProps) {
+  const { slug, locale } = params; // puedes usar locale si lo necesitas
   const sp = searchParams;
 
   const story = await getAutographById(slug);

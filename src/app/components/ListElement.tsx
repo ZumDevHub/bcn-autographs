@@ -42,7 +42,7 @@ export default function ListElement({ story, display }: ListElementProps) {
       <div
         className={
           display === "list"
-            ? "mb-5 bg-white rounded-md p-2 hover:bg-gray-100 cursor-pointer"
+            ? "mb-5 bg-red-200 rounded-md p-2 hover:bg-gray-100 cursor-pointer"
             : "w-xs mb-5 bg-white rounded-md p-2 mr-2 hover:bg-gray-100 cursor-pointer"
         }
       >

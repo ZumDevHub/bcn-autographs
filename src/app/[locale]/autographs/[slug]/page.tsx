@@ -24,11 +24,11 @@ export default async function AutographPage({
   params,
   searchParams,
 }: {
-  params: { slug: string }; // ✅ objeto normal
-  searchParams: { [key: string]: string | string[] | undefined }; // ✅ objeto normal
+  params: { locale: string; slug: string }; // <-- agregar locale
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const { slug } = params; // ✅ sin await
-  const sp = searchParams; // ✅ sin await
+  const { slug, locale } = params;
+  const sp = searchParams;
 
   const story = await getAutographById(slug);
   if (!story) notFound();

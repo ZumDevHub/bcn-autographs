@@ -33,31 +33,31 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
     <section className="sm:grid sm:grid-cols-[3.5fr_2.5fr]">
       {/* Rich Text */}
       {blok.contextInfo && (
-        <div className="prose prose-sm text-gray-800 p-5 mr-5 bg-gray-200 rounded-md">
+        <div className="prose prose-sm text-gray-800 p-5 bg-gray-200 rounded-md sm:mr-5">
           {render(blok.contextInfo)}
         </div>
       )}
 
       {/* Imágenes relacionadas */}
       {hasImages && (
-        <div className="relative flex flex-col items-start bg-gray-400 pl-8 py-8 rounded-md">
+        <div className="relative flex flex-col items-start bg-gray-400 mt-8 pl-8 py-8 rounded-md sm:mt-0">
          {images.map((img, index) => (
           <React.Fragment key={img.id}>
             <figure>
-              <div className="group relative flex justify-start w-7/10">
+              <div className="group relative flex justify-start w-full xl:w-7/10">
                 <Image
                   src={img.filename}
                   alt={img.alt || ""}
                   width={600}
                   height={400}
-                  className="w-7/10 max-h-70 cursor-zoom-in hover:outline hover:outline-1 hover:outline-black"
+                  className="w-9/10 cursor-zoom-in hover:outline hover:outline-1 hover:outline-black"
                   style={{ objectFit: "contain" }}
                   onClick={() => setSelectedImage({ filename: img.filename, alt: img.alt })}
                 />
               </div>
 
               {img.title && (
-                <figcaption className="text-sm text-gray-600 pt-3 max-w-7/10">
+                <figcaption className="w-9/10 text-sm text-gray-600 pt-3 xl:max-w-7/10">
                   {img.title}
                 </figcaption>
               )}

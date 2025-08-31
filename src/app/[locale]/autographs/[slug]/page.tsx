@@ -55,13 +55,13 @@ export default async function AutographPage({
         </Link>
       </div>
 
-      <div className="flex flex-col items-center gap-4 mt-6 sm:flex-row sm:items-start bg-gray-100 ">
+      <div className="flex flex-col items-center mt-6 sm:flex-row sm:items-start bg-gray-100 ">
         {aut.photo?.filename && (
           <div className="relative">
             <ContextMainImage src={aut.photo.filename} alt={aut.signerName} />
           </div>
         )}
-        <div className="flex flex-col text-gray-800">
+        <div className="flex flex-col text-gray-800 sm:ml-5">
           <h1 className="mt-4 text-2xl font-bold">{aut.signerName}</h1>
           <p className="text-gray-600">
             ({aut.birthYear} – {aut.deathYear})
@@ -84,7 +84,7 @@ export default async function AutographPage({
       </div>
 
       {aut.context && aut.context.length > 0 && (
-        <div className="mt-12 space-y-10">
+        <div className="mt-12 justify-center">
           {aut.context.map((blok: ContextBlok) => (
             <ContextInfo blok={blok} key={blok._uid} />
           ))}

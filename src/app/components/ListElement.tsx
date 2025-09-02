@@ -59,12 +59,12 @@ export default function ListElement({ story, display }: ListElementProps) {
           )}
           <div className="flex flex-col pl-2 text-gray-800">
             <div>
-              <span className={display == "list" ? `text-base font-semibold` : `text-sm font-semibold`}>
+              <div className={display == "list" ? `text-base font-semibold` : `text-sm font-semibold`}>
                 {story.signerName}{" "}
-              </span>
-              <span className={display == "list" ? `text-sm` : `text-xs`}>
+              </div>
+              <div className={display == "list" ? `text-sm` : `text-xs`}>
                 ({story.birthYear} - {story.deathYear})
-              </span>
+              </div>
             </div>
             <div className={display == "list" ? `text-sm` : `text-xs`}>
               {story.nationality} {story.occupation}.

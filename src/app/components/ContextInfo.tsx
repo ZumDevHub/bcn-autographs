@@ -40,7 +40,7 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
 
       {/* Imágenes relacionadas */}
       {hasImages && (
-        <div className="relative flex flex-col items-start bg-gray-400 mt-8 pl-8 py-8 rounded-md sm:mt-0">
+        <div className="relative flex flex-col items-start bg-gray-300 mt-8 pl-8 py-8 rounded-md sm:mt-0">
          {images.map((img, index) => (
           <React.Fragment key={img.id}>
             <figure>
@@ -57,7 +57,7 @@ export default function ContextInfo({ blok }: ContextInfoProps) {
               </div>
 
               {img.title && (
-                <figcaption className="w-9/10 text-sm text-gray-600 pt-3 xl:max-w-7/10">
+                <figcaption className="w-9/10 text-sm text-gray-800 pt-3 xl:max-w-7/10">
                   {img.title}
                 </figcaption>
               )}

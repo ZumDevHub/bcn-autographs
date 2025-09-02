@@ -28,8 +28,9 @@ export default async function AutographPage({
   params: { slug: string; locale: string };
   searchParams: SearchParams;
 }) {
-  const { slug, locale } = params;
-  const sp = searchParams;
+
+  const { slug, locale } = await params;
+  const sp = await searchParams;
 
   const story = await getAutographById(slug);
   if (!story) notFound();

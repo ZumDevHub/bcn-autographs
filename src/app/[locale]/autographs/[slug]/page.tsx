@@ -29,6 +29,13 @@ type Autograph = {
   _uid:string;
 };
 
+type StoryblokStory<T> = {
+  content: T;
+  uuid: string;
+  id: number;
+  slug: string;
+};
+
 async function getAutographById(idFromUrl: string, locale:string) {
   const storyblokApi = getStoryblokApi();
   const { data } = await storyblokApi.get("cdn/stories", {
@@ -48,7 +55,7 @@ async function getAutographById(idFromUrl: string, locale:string) {
       language: locale,
       per_page: 100,
     });
-      return data.stories.map((s: any) => ({
+      return data.stories.map((s: StoryblokStory<Autograph>) => ({
       ...s.content,   // todos los campos de la story (tu modelo Autograph)
       uuid: s.uuid,   // uuid único de la story
       storyId: s.id,  // id numérico de la story (opcional)

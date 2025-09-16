@@ -9,6 +9,7 @@ import AutographsList from "./AutographsList";
 import Categories from "./Categories";
 import Years from "./Years";
 import valueAproxDate from "@/utils/valueAproxDate";
+import { type Locale } from "@/lib/i18n";
 
 // Tipo final usado en la UI
 export interface Autograph {
@@ -34,11 +35,13 @@ interface StoryblokStory {
   content: Omit<Autograph, "storyName">;
 }
 
+
 interface HomeClientProps {
   data: StoryblokStory[];
+  locale: Locale;
 }
 
-export default function HomeClient({ data }: HomeClientProps) {
+export default function HomeClient({ data, locale }: HomeClientProps) {
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -56,7 +59,16 @@ export default function HomeClient({ data }: HomeClientProps) {
   const [recordsDisplayed, setRecordsDisplayed] = useState<number>(0);
   const [years, setYears] = useState<number[]>([]);
 
-  const categories = ["music", "literature", "theatre", "painting", "science", "chess", "politics", "unusual"];
+  type CategoryKey =
+    | "music"
+    | "literature"
+    | "theatre"
+    | "science"
+    | "chess"
+    | "politics"
+    | "unusual";
+
+  const categories: CategoryKey[] = ["music", "literature", "theatre", "science", "chess", "politics", "unusual"];
   const sortOptions = ["Name Asc", "Name Desc", "Date Asc", "Date Desc"];
   const sortAlternatives = sortOptions.filter(opt => opt !== sortBy);
 
@@ -171,15 +183,15 @@ export default function HomeClient({ data }: HomeClientProps) {
   }
 
   return (
-    <div className="flex pt-10 bg-gray-200 sm:grid sm:grid-cols-[1.5fr_4.5fr]">
+    <div className="relative flex pt-10 bg-gray-200 sm:grid sm:grid-cols-[1.5fr_4.5fr]">
       <div className="hidden pt-5 p-2 sm:flex sm:flex-col ">
         <div className="fixed w-1/3">
           <DisplayBarSearchForm setSearchedName={setSearchedName} />
-          <Categories categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
+          <Categories locale={locale} categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
           <Years years={years} toggleYear={toggleYear} checkedYears={checkedYears} />
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="w-full flex flex-col">
         <DisplayBar
           sortBy={sortBy}
           setSortBy={setSortBy}

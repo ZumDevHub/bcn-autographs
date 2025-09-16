@@ -15,7 +15,7 @@ type DisplayBarProps = {
 export default function DisplayBar({sortBy, setSortBy, setDisplay, display, sortAlternatives}:DisplayBarProps) {
 
   return (
-    <div className="flex h-full items-center bg-gray-200 pt-5 pb-2 pl-5 pr-5">
+    <div className="fixed top-15 right-0 w-3/4 flex items-center bg-gray-200 pb-2 pl-5 pr-5">
       <div className="flex items-bottom justify-between h-full w-full bg-gray-300 p-1 rounded-md">
         <DisplayBarSortList 
           sortBy = {sortBy}
@@ -23,7 +23,7 @@ export default function DisplayBar({sortBy, setSortBy, setDisplay, display, sort
           sortAlternatives = {sortAlternatives}
         />
         
-        <div className="flex items-end justify-center h-full bg-gray-300">
+        <div className="flex items-end justify-center bg-gray-300">
           <ListGridButtons 
             setDisplay = {setDisplay}
           />

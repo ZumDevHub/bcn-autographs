@@ -1,11 +1,44 @@
+import type { Locale } from "@/lib/i18n"
+
+type CategoryKey =
+  | "music"
+  | "literature"
+  | "theatre"
+  | "science"
+  | "chess"
+  | "politics"
+  | "unusual";
+
 type CategoriesProps = {
-  categories: string[];
+  locale: Locale;
+  categories: CategoryKey[];
   toggleCategory: (cat: string) => void;
   checkedCategories: string[];
 }
 
+const t = {
+  "en-gb": {
+    "music": "music",
+    "literature": "literature",
+    "theatre": "theatre",
+    "science": "science",
+    "chess": "chess",
+    "politics": "politics",
+    "unusual": "inusual"
+  },
+  "ca": {
+    "music": "Música",
+    "literature": "Literatura",
+    "theatre": "Teatre",
+    "science": "Ciència",
+    "chess": "Escacs",
+    "politics": "Poítica",
+    "unusual": "Inusual"
+  }
+}
 
-export default function Categories({categories, toggleCategory, checkedCategories}:CategoriesProps) {
+
+export default function Categories({locale, categories, toggleCategory, checkedCategories}:CategoriesProps) {
   return (
     <div>
       <div className="flex items-center w-2/3 pl-1 pt-2 pb-1 text-sm font-medium text-white bg-gray-900 rounded-t-sm">
@@ -23,7 +56,7 @@ export default function Categories({categories, toggleCategory, checkedCategorie
                 onChange={() => toggleCategory(cat)}
                 className="ml-1 mr-1 cursor-pointer"
               />
-              {cat}
+              {t[locale][cat]}
             </label>
           )
         })}

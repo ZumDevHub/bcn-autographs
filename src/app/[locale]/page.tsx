@@ -1,9 +1,11 @@
 import { getStoryblokApi } from "@/utils/storyblok";
 import HomeClient from "../components/HomeClient";
+import { type Locale } from "@/lib/i18n";
 
 export const revalidate = 60;
 
-export default async function Home({ params }: { params: Promise<{ locale: string}>}) {
+
+export default async function Home({ params }: { params: Promise<{ locale: Locale}>}) {
   const { locale } = await params;
 
   let stories = [];
@@ -20,7 +22,5 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
     console.error("Storyblok fetch failed:", error);
   }
 
-  return <HomeClient 
-    data={stories}
-    />;
+  return <HomeClient data={stories} locale={locale}/>;
 }

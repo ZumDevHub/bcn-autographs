@@ -27,7 +27,7 @@ export default function AutographsList({ autographsList, display, recordsDisplay
 
   return (
     <main className="w-full flex flex-col bg-gray-200">
-      <div className="flex text-xs pl-5 pt-5">
+      <div className="flex text-sm pl-5 pt-25">
         Records displayed: {recordsDisplayed}
       </div>
       <div className={display === "list" ? "flex flex-col bg-gray-200 p-5" : "flex flex-wrap bg-gray-200 p-5"}>

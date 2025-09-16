@@ -13,6 +13,8 @@ type Autograph = {
   collectionName: string;
   photo?: { filename: string };
   storyName: string;
+  relatedAutographs: string[];
+  _uid:string;
 };
 
 type AutographsListProps = {
@@ -22,7 +24,7 @@ type AutographsListProps = {
 };
 
 export default function AutographsList({ autographsList, display, recordsDisplayed }: AutographsListProps) {
-  // console.log("autographsList: ", autographsList)
+
   return (
     <main className="w-full flex flex-col bg-gray-200">
       <div className="flex text-xs pl-5 pt-5">

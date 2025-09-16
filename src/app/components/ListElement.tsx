@@ -6,9 +6,6 @@ import { useSearchParams } from "next/navigation";
 import formatDate from "@/utils/formatDate";
 import { useParams } from "next/navigation";
 
-
-
-
 type Autograph = {
   Id: string;
   signerName: string;
@@ -22,6 +19,8 @@ type Autograph = {
   collectionName: string;
   photo?: { filename: string };
   storyName: string;
+  relatedAutographs: string[];
+   _uid:string;
 };
 
 type ListElementProps = {
@@ -36,17 +35,18 @@ export default function ListElement({ story, display }: ListElementProps) {
   const locale = params?.locale ?? "en-gb"; // fallback al default
   const href = `/${locale}/autographs/${story.Id}${query ? `?${query}` : ""}`;
 
-
   return (
+   
     <Link href={href} prefetch={false}>
       <div
         className={
           display === "list"
-            ? "mb-5 bg-white rounded-md p-2 hover:bg-gray-100 cursor-pointer"
+            ? "flex mb-5 bg-white rounded-md p-2 hover:bg-gray-100 cursor-pointer"
             : "w-xs mb-5 bg-white rounded-md p-2 mr-2 hover:bg-gray-100 cursor-pointer"
         }
       >
-        <div className="flex p-2">
+
+        <div className="flex justify-evenly p-2">
           {story.photo?.filename && (
             <Image
               src={story.photo.filename}
@@ -57,6 +57,7 @@ export default function ListElement({ story, display }: ListElementProps) {
               priority
             />
           )}
+         
           <div className="flex flex-col pl-2 text-gray-800">
             <div>
               <div className={display == "list" ? `text-base font-semibold` : `text-sm font-semibold`}>
@@ -67,7 +68,9 @@ export default function ListElement({ story, display }: ListElementProps) {
               </div>
             </div>
             <div className={display == "list" ? `text-sm` : `text-xs`}>
-              {story.nationality} {story.occupation}.
+             {locale == 'en-gb' 
+              ? `${story.nationality} ${story.occupation}.` 
+              : `${story.occupation} ${story.nationality}.`}
             </div>
             <div className={display == "list" ? `text-sm` : `text-xs`}>
               Autograph date:
@@ -78,8 +81,9 @@ export default function ListElement({ story, display }: ListElementProps) {
               </span>
             </div>
           </div>
+
         </div>
-      </div>
+        </div>
     </Link>
   );
 }

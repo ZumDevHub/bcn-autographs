@@ -24,6 +24,8 @@ export interface Autograph {
   collectionName: string;
   photo?: { filename: string };
   storyName: string;
+  relatedAutographs: string[];
+  _uid:string;
 }
 
 // Tipo crudo que viene de Storyblok
@@ -37,6 +39,7 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ data }: HomeClientProps) {
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -168,8 +171,8 @@ export default function HomeClient({ data }: HomeClientProps) {
   }
 
   return (
-    <div className="flex sm:grid sm:grid-cols-[1.5fr_4.5fr]">
-      <div className="hidden bg-gray-200 pt-5 p-2 sm:flex sm:flex-col ">
+    <div className="flex pt-10 bg-gray-200 sm:grid sm:grid-cols-[1.5fr_4.5fr]">
+      <div className="hidden pt-5 p-2 sm:flex sm:flex-col ">
         <div className="fixed w-1/3">
           <DisplayBarSearchForm setSearchedName={setSearchedName} />
           <Categories categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
@@ -184,7 +187,11 @@ export default function HomeClient({ data }: HomeClientProps) {
           setDisplay={setDisplay}
           display={display}
         />
-        <AutographsList autographsList={sortedList} display={display} recordsDisplayed={recordsDisplayed} />
+        <AutographsList 
+          autographsList={sortedList} 
+          display={display} 
+          recordsDisplayed={recordsDisplayed} 
+        />
       </div>
     </div>
   );

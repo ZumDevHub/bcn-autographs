@@ -1,15 +1,6 @@
 import type { Locale } from "@/lib/i18n"
 import { CategoryKey } from "../types/categoryKeys";
 
-// type CategoryKey =
-//   | "music"
-//   | "literature"
-//   | "theatre"
-//   | "science"
-//   | "chess"
-//   | "politics"
-//   | "unusual";
-
 type CategoriesProps = {
   locale: Locale;
   categories: CategoryKey[];
@@ -37,7 +28,6 @@ const t = {
     "unusual": "Inusual"
   }
 }
-
 
 export default function Categories({locale, categories, toggleCategory, checkedCategories}:CategoriesProps) {
   return (

@@ -3,16 +3,19 @@
 import DisplayBarSortList from "./DisplayBarSortList"
 import { Dispatch, SetStateAction } from "react";
 import ListGridButtons from "./ListGridButtons";
+import type { Locale } from "@/lib/i18n";
+import { SortKey } from "../types/sortKeys";
 
 type DisplayBarProps = {
-  sortBy: string;
-  setSortBy: Dispatch<SetStateAction<string>>;
+  sortBy: SortKey;
+  setSortBy: Dispatch<SetStateAction<SortKey>>;
   setDisplay: Dispatch<SetStateAction<string>>;
   display: string;
-  sortAlternatives: string[];
+  // sortAlternatives: string[];
+  locale: Locale;
 };
 
-export default function DisplayBar({sortBy, setSortBy, setDisplay, display, sortAlternatives}:DisplayBarProps) {
+export default function DisplayBar({sortBy, setSortBy, setDisplay, display, locale}:DisplayBarProps) {
 
   return (
     <div className="fixed top-15 right-0 w-full flex items-center bg-gray-200 pb-2 pl-5 pr-5 sm:w-3/4">
@@ -20,7 +23,7 @@ export default function DisplayBar({sortBy, setSortBy, setDisplay, display, sort
         <DisplayBarSortList 
           sortBy = {sortBy}
           setSortBy = {setSortBy}
-          sortAlternatives = {sortAlternatives}
+          locale = {locale}
         />
         
         <div className="flex items-end justify-center bg-gray-300">

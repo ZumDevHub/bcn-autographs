@@ -1,13 +1,14 @@
 import type { Locale } from "@/lib/i18n"
+import { CategoryKey } from "../types/categoryKeys";
 
-type CategoryKey =
-  | "music"
-  | "literature"
-  | "theatre"
-  | "science"
-  | "chess"
-  | "politics"
-  | "unusual";
+// type CategoryKey =
+//   | "music"
+//   | "literature"
+//   | "theatre"
+//   | "science"
+//   | "chess"
+//   | "politics"
+//   | "unusual";
 
 type CategoriesProps = {
   locale: Locale;

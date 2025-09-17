@@ -10,6 +10,8 @@ import Categories from "./Categories";
 import Years from "./Years";
 import valueAproxDate from "@/utils/valueAproxDate";
 import { type Locale } from "@/lib/i18n";
+import { CategoryKey } from "../types/categoryKeys";
+import { SortKey } from "../types/sortKeys";
 
 // Tipo final usado en la UI
 export interface Autograph {
@@ -49,7 +51,13 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
   const hydratedFromUrl = useRef(false);
 
   // Estados iniciales leídos de la URL
-  const [sortBy, setSortBy] = useState<string>(searchParams.get("sort") || "Name Asc");
+  const [sortBy, setSortBy] = useState<SortKey>(() => {
+  const sort = searchParams.get("sort");
+  if (sort === "Name Asc" || sort === "Name Desc" || sort === "Date Asc" || sort === "Date Desc") {
+    return sort;
+  }
+  return "Name Asc";
+  });
   const [checkedCategories, setCheckedCategories] = useState<string[]>(searchParams.get("categories")?.split(",") || []);
   const [checkedYears, setCheckedYears] = useState<number[]>(searchParams.get("years")?.split(",").map(Number) || []);
   const [display, setDisplay] = useState(searchParams.get("display") || "list");
@@ -59,19 +67,8 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
   const [recordsDisplayed, setRecordsDisplayed] = useState<number>(0);
   const [years, setYears] = useState<number[]>([]);
 
-  type CategoryKey =
-    | "music"
-    | "literature"
-    | "theatre"
-    | "science"
-    | "chess"
-    | "politics"
-    | "unusual";
-
   const categories: CategoryKey[] = ["music", "literature", "theatre", "science", "chess", "politics", "unusual"];
-  const sortOptions = ["Name Asc", "Name Desc", "Date Asc", "Date Desc"];
-  const sortAlternatives = sortOptions.filter(opt => opt !== sortBy);
-
+  
   // Normalizamos datos de Storyblok
   useEffect(() => {
     if (!data) return;
@@ -195,9 +192,9 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
         <DisplayBar
           sortBy={sortBy}
           setSortBy={setSortBy}
-          sortAlternatives={sortAlternatives}
           setDisplay={setDisplay}
           display={display}
+          locale = {locale}
         />
         <AutographsList 
           autographsList={sortedList} 

@@ -1,0 +1,1 @@
+  export type SortKey = "Name Asc" | "Name Desc" | "Date Asc" | "Date Desc";

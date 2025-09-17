@@ -203,6 +203,7 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
           autographsList={sortedList} 
           display={display} 
           recordsDisplayed={recordsDisplayed} 
+          locale= {locale}
         />
       </div>
     </div>

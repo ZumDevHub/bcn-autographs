@@ -31,7 +31,7 @@ export default function DisplayBarSortList({sortBy, setSortBy, locale}:DisplayBa
 const [sortDropMenu, setSortDropMenu] = useState<boolean>(false)
 
 const sortOptions: SortKey[] = ["Name Asc", "Name Desc", "Date Asc", "Date Desc"];
-const sortAlternatives2 = sortOptions.filter(opt => opt !== sortBy);
+const sortAlternatives = sortOptions.filter(opt => opt !== sortBy);
 
 	return(
 		<div className="relative w-48">
@@ -44,14 +44,14 @@ const sortAlternatives2 = sortOptions.filter(opt => opt !== sortBy);
         <span className="ml-2">▼</span> 
         {sortDropMenu && (
           <div className="absolute flex flex-col top-full left-0 w-full rounded-md bg-white border-1 border-gray-300 p-1 text-sm cursor-pointer shadow-xl shadow-gray-400">
-            <div onClick={() => setSortBy(sortAlternatives2[0])} className="hover:bg-gray-200">
-              {t[locale][sortAlternatives2[0]]}
+            <div onClick={() => setSortBy(sortAlternatives[0])} className="hover:bg-gray-200">
+              {t[locale][sortAlternatives[0]]}
             </div>
-            <div onClick={() => setSortBy(sortAlternatives2[1])} className="hover:bg-gray-200">
-              {t[locale][sortAlternatives2[1]]}
+            <div onClick={() => setSortBy(sortAlternatives[1])} className="hover:bg-gray-200">
+              {t[locale][sortAlternatives[1]]}
             </div>
-            <div onClick={() => setSortBy(sortAlternatives2[2])} className="hover:bg-gray-200">
-              {t[locale][sortAlternatives2[2]]}
+            <div onClick={() => setSortBy(sortAlternatives[2])} className="hover:bg-gray-200">
+              {t[locale][sortAlternatives[2]]}
             </div>
           </div>
         )}

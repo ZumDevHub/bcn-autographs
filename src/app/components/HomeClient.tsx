@@ -37,7 +37,6 @@ interface StoryblokStory {
   content: Omit<Autograph, "storyName">;
 }
 
-
 interface HomeClientProps {
   data: StoryblokStory[];
   locale: Locale;

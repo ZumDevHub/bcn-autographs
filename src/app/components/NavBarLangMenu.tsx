@@ -1,20 +1,26 @@
 'use client'
 
 import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { type Locale } from "@/lib/i18n";
 
-export default function NavBarLangMenu({locale} : {locale: string}) {
+
+export default function NavBarLangMenu({locale} : {locale: Locale}) {
 
 const router = useRouter();
 const pathname = usePathname();
+const searchParams = useSearchParams();
+
+const fullPath = `${pathname}?${searchParams.toString()}`;
 
 const [visibleMenu, setVisibleMenu] = useState(false);
 
 const handleChange = (newLocale: string) => {
-  // reemplazar el locale en la URL
   const segments = pathname.split("/");
   segments[1] = newLocale;
-  router.push(segments.join("/"));
+  const newPath = segments.join("/");
+  const query = searchParams.toString();
+  router.push(query ? `${newPath}?${query}` : newPath);
 };
 
 const lTrans:Record<string, string> = {
@@ -35,8 +41,7 @@ return (
             {lTrans[lang]}    
           </li>
         )}
-        
       </ul>
-  </div>
+    </div>
   )
 }

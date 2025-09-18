@@ -184,6 +184,8 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
         <div className="fixed w-1/3">
           <DisplayBarSearchForm setSearchedName={setSearchedName} />
           <Categories locale={locale} categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
+          {/* <hr className="border-gray-300 my-5 w-1/3" /> */}
+          <div className="my-5"></div>
           <Years years={years} toggleYear={toggleYear} checkedYears={checkedYears} />
         </div>
       </div>

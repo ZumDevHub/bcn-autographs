@@ -33,7 +33,7 @@ export default function AutographsList({ autographsList, display, recordsDisplay
   }
 
   return (
-    <main className="w-full flex flex-col bg-gray-200">
+    <main className="w-full min-h-screen flex flex-col bg-gray-200">
       <div className="flex text-sm pl-5 pt-25">
         {t[locale]}: {recordsDisplayed}
       </div>

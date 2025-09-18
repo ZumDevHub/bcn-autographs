@@ -11,7 +11,7 @@ const router = useRouter();
 const pathname = usePathname();
 const searchParams = useSearchParams();
 
-const fullPath = `${pathname}?${searchParams.toString()}`;
+// const fullPath = `${pathname}?${searchParams.toString()}`;
 
 const [visibleMenu, setVisibleMenu] = useState(false);
 
@@ -33,15 +33,16 @@ const restOfLangs = langs.filter((lang) => lang !== locale);
 
 return (
   
-    <div className="text-sm relative w-40 h-6 bg-white text-gray-600 rounded-xs p-1 cursor-pointer hover:bg-gray-200 hover:text-white" onClick={() => setVisibleMenu(!visibleMenu)}>
-       {lTrans[locale]}
-      <ul className={`${!visibleMenu ? "hidden" : "absolute block left-0 top-7 w-full h-auto rounded-sm p-1 pb-4 bg-white "}`}> 
-        {restOfLangs.map((lang, i) => 
-          <li className="text-gray-600 px-2 hover:bg-gray-300 hover:text-white" key={i} onClick={() => handleChange(lang)}>
-            {lTrans[lang]}    
-          </li>
-        )}
-      </ul>
+    <div className="group relative flex justify-between w-25 h-6 bg-white text-sm text-gray-600 rounded-xs p-1 cursor-pointer" onClick={() => setVisibleMenu(!visibleMenu)}>
+       <span>{lTrans[locale]}</span>
+        <span className="pl-2 group-hover:text-gray-200 transition-colors duration-100 ease-in-out">▼</span> 
+          <ul className={`${!visibleMenu ? "hidden" : "absolute block left-0 top-6 w-full h-auto rounded-xs pt-2 pb-2 bg-white "}`}> 
+            {restOfLangs.map((lang, i) => 
+              <li className="px-2 hover:bg-gray-300 hover:text-white" key={i} onClick={() => handleChange(lang)}>
+                {lTrans[lang]}    
+              </li>
+            )}
+          </ul>
     </div>
   )
 }

@@ -33,9 +33,11 @@ export default function Categories({locale, categories, toggleCategory, checkedC
   return (
     <div>
       <div className="flex items-center w-2/3 pl-1 pt-2 pb-1 text-sm font-medium text-white bg-gray-900 rounded-t-sm">
+      {/* <div className="flex items-center w-2/3 pl-1 pt-2 pb-1 text-sm font-medium text-gray-800 bg-gray-200"> */}
         Categories
       </div>
       <div className="flex flex-col h-auto w-2/3 pl-1 pt-2 pb-1 text-sm font-light text-black bg-white">
+      {/* <div className="flex flex-col h-auto w-2/3 pl-1 pt-2 pb-1 text-sm font-light text-gray-700 bg-gray-200"> */}
         {categories.map((cat) => {
           return(
             <label key={cat} className="cursor-pointer hover:bg-gray-100">

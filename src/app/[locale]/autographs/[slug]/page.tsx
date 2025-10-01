@@ -6,7 +6,6 @@ import { render } from "storyblok-rich-text-react-renderer";
 import ContextInfo from "@/app/components/ContextInfo";
 import { ContextBlok } from "@/app/types/storyblok";
 import ContextMainImage from "@/app/components/ContextMainImage";
-import Image from "next/image";
 import RelatedAutographsList from "@/app/components/RelatedAutographs";
 
 export const dynamic = "force-dynamic";
@@ -87,8 +86,8 @@ export default async function AutographPage({
   params,
   searchParams,
 }: {
-  params: { slug: string; locale: string };
-  searchParams: SearchParams;
+  params: Promise<{ slug: string; locale: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
 
   const { slug, locale } = await params;

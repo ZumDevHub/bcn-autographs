@@ -11,6 +11,7 @@ import Years from "./Years";
 import valueAproxDate from "@/utils/valueAproxDate";
 import { type Locale } from "@/lib/i18n";
 import { CategoryKey } from "../types/categoryKeys";
+import { CategoryMusKeys } from "../types/categoryMusKeys";
 import { SortKey } from "../types/sortKeys";
 
 // Tipo final usado en la UI
@@ -23,6 +24,7 @@ export interface Autograph {
   birthYear: string;
   deathYear: string;
   category: string;
+  musicCategory: string[];
   occupation: string;
   collectionName: string;
   photo?: { filename: string };
@@ -58,6 +60,8 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
   return "Name Asc";
   });
   const [checkedCategories, setCheckedCategories] = useState<string[]>(searchParams.get("categories")?.split(",") || []);
+  const [checkedMusCategories,setCheckedMusCategories] = useState<string[]>([]);
+
   const [checkedYears, setCheckedYears] = useState<number[]>(searchParams.get("years")?.split(",").map(Number) || []);
   const [display, setDisplay] = useState(searchParams.get("display") || "list");
   const [searchedName, setSearchedName] = useState(searchParams.get("searched") || "");
@@ -67,7 +71,9 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
   const [years, setYears] = useState<number[]>([]);
 
   const categories: CategoryKey[] = ["music", "literature", "theatre", "science", "chess", "politics", "unusual"];
-  
+  const musicCategories: CategoryMusKeys[] = ["composers", "conductors", "choral conductor", "pianists", "violinists", "guitarists", "cellists", "singers"];
+
+
   // Normalizamos datos de Storyblok
   useEffect(() => {
     if (!data) return;
@@ -100,12 +106,16 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
     hydratedFromUrl.current = true;
   }, []);
 
+
+
+
   // Sincronizar filtros con URL (solo si cambia)
   useEffect(() => {
     if (!hydratedFromUrl.current) return;
 
     const params = new URLSearchParams();
     if (checkedCategories.length) params.set("categories", checkedCategories.join(","));
+    // if (musicCategories === true) params.set("musicCat", checkedMusCat.join(","));
     if (checkedYears.length) params.set("years", checkedYears.join(","));
     if (sortBy !== "Name Asc") params.set("sort", sortBy);
     if (display !== "list") params.set("display", display);
@@ -116,14 +126,31 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
     if (newUrl !== currentUrl) router.replace(newUrl, { scroll: false });
   }, [checkedCategories, checkedYears, sortBy, display, pathname, router, searchParams]);
 
+
+useEffect(() => {
+  // Si "music" ya no está entre las categorías activas, vaciamos las subcategorías musicales
+  if (!checkedCategories.includes("music")) {
+    setCheckedMusCategories([]);
+  }
+}, [checkedCategories])
+
   // Ordenar y filtrar
   const sortedList = useMemo<Autograph[]>(() => {
+    
     let list = [...autographsList];
 
     if (checkedCategories.length > 0) {
       list = list.filter((aut) => checkedCategories.includes(aut.category));
     }
 
+      if (checkedMusCategories.length > 0) {
+        list = list.filter(
+          (aut) =>
+            Array.isArray(aut.musicCategory) &&
+            aut.musicCategory.some((cat) => checkedMusCategories.includes(cat))
+         );
+      }
+         
     if (checkedYears.length > 0) {
       list = list.filter((aut) => {
         const year = aut.exactDate
@@ -166,7 +193,7 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
     setRecordsDisplayed(list.length);
 
     return list;
-  }, [checkedCategories, checkedYears, autographsList, sortBy, searchedName]);
+  }, [checkedCategories, checkedMusCategories, checkedYears, autographsList, sortBy, searchedName]);
 
   function toggleCategory(cat: string) {
     setCheckedCategories((prev) =>
@@ -174,17 +201,22 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
     );
   }
 
+  function toggleMusCategory(cat: string) {
+    setCheckedMusCategories((prev) =>
+      prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
+    );
+  }
+
   function toggleYear(year: number) {
     setCheckedYears((prev) => (prev.includes(year) ? prev.filter((y) => y !== year) : [...prev, year]));
   }
-
+  
   return (
     <div className="relative flex pt-10 bg-gray-200 sm:grid sm:grid-cols-[1.5fr_4.5fr]">
       <div className="hidden pt-5 p-2 sm:flex sm:flex-col ">
         <div className="fixed w-1/3">
           <DisplayBarSearchForm setSearchedName={setSearchedName} />
           <Categories locale={locale} categories={categories} toggleCategory={toggleCategory} checkedCategories={checkedCategories} />
-          {/* <hr className="border-gray-300 my-5 w-1/3" /> */}
           <div className="my-5"></div>
           <Years years={years} toggleYear={toggleYear} checkedYears={checkedYears} />
         </div>
@@ -192,6 +224,10 @@ export default function HomeClient({ data, locale }: HomeClientProps) {
       <div className="w-full flex flex-col">
         <DisplayBar
           sortBy={sortBy}
+          checkedCategories = {checkedCategories}
+          checkedMusCategories = {checkedMusCategories}
+          musicCategories = {musicCategories}
+          toggleMusCategory = {toggleMusCategory}
           setSortBy={setSortBy}
           setDisplay={setDisplay}
           display={display}
